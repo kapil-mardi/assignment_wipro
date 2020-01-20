@@ -2,6 +2,7 @@ package kapsapps.xyz.assignement_wipro
 
 import kapsapps.xyz.assignement_wipro.modal.BaseModal
 import kapsapps.xyz.assignement_wipro.service.Client
+import kapsapps.xyz.assignement_wipro.service.ServiceCaller
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -34,6 +35,32 @@ class FunctionalityTest {
                 System.out.println(t.localizedMessage)
             }
         })
+
+
+        //adding some timeout as above call is asynchronous and execution will not wait for the call to finish
+        try{
+
+            Thread.sleep(3 * 1000)
+
+        }catch (e : Exception){
+            e.printStackTrace()
+        }
+
+    }
+
+    //test service caller with rx java
+    @Test
+    fun checkServiceCaller(){
+
+        ServiceCaller().getData()
+            .subscribe (
+            {
+                assertEquals(it?.rows != null,true)
+            },
+            {
+                System.out.print(it.localizedMessage)
+            }
+        )
 
 
         //adding some timeout as above call is asynchronous and execution will not wait for the call to finish
